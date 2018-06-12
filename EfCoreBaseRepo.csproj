@@ -4,7 +4,12 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <Authors>John Olawale</Authors>
     <Description>A base repository for Entity Framework Core</Description>
-    <PackageReleaseNotes>A base repository for Entity Framework Core</PackageReleaseNotes>
+    <PackageReleaseNotes>Added Base Repository</PackageReleaseNotes>
+    <Version>1.1.0</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0" />
+  </ItemGroup>
 
 </Project>
