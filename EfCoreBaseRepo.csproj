@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Authors>John Olawale</Authors>
+    <Description>A base repository for Entity Framework Core</Description>
+    <PackageReleaseNotes>A base repository for Entity Framework Core</PackageReleaseNotes>
+  </PropertyGroup>
+
+</Project>
