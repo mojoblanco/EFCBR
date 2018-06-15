@@ -48,21 +48,34 @@ namespace EfCoreBaseRepo.Repository
 
         public async Task CreateAsync(TEntity entity)
         {
+            entity.CreatedAt = DateTime.Now;
             await _context.Set<TEntity>().AddAsync(entity);
         }
 
         public async Task CreateManyAsync(IEnumerable<TEntity> entities)
         {
+            foreach (var item in entities)
+            {
+                item.CreatedAt = DateTime.Now;
+            }
+
             await _context.Set<TEntity>().AddRangeAsync(entities);
         }
 
         public void Update(int id, TEntity entity)
         {
+            entity.UpdatedAt = DateTime.Now;
+
             _context.Set<TEntity>().Update(entity);
         }
 
         public void UpdateMany(IEnumerable<TEntity> entities)
         {
+            foreach (var item in entities)
+            {
+                item.UpdatedAt = DateTime.Now;
+            }
+
             _context.Set<TEntity>().UpdateRange(entities);
         }
 
