@@ -1,12 +1,10 @@
-﻿using EfCoreBaseRepo.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace EfCoreBaseRepo.IRepository
+namespace EfCoreBaseRepo
 {
     public interface IBaseRepository<TEntity> where TEntity : BaseEntity
     {
