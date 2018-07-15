@@ -36,16 +36,28 @@ namespace EfCoreBaseRepo.Repository
                    select x;
         }
 
+        public TEntity GetById(int id)
+        {
+            return _context.Set<TEntity>().Find(id);
+        }
+
         public async Task<TEntity> GetByIdAsync(int id)
         {
             return await _context.Set<TEntity>()
-                .AsNoTracking()
-                .FirstOrDefaultAsync(e => e.Id == id);
+                    .FindAsync(id);
+        }
+
+        public void Create(TEntity entity)
+        {
+            entity.CreatedAt = DateTime.Now;
+
+            _context.Set<TEntity>().Add(entity);
         }
 
         public async Task CreateAsync(TEntity entity)
         {
             entity.CreatedAt = DateTime.Now;
+
             await _context.Set<TEntity>().AddAsync(entity);
         }
 

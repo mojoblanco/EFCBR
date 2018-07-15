@@ -14,7 +14,11 @@ namespace EfCoreBaseRepo
 
         IQueryable<TEntity> GetbyManyIds(int[] ids);
 
+        TEntity GetById(int id);
+
         Task<TEntity> GetByIdAsync(int id);
+
+        void Create(TEntity entity);
 
         Task CreateAsync(TEntity entity);
 
