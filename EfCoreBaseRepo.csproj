@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <Authors>John Olawale</Authors>
     <Description>A base repository for Entity Framework Core</Description>
-    <PackageReleaseNotes>Added UpdatedAt Column</PackageReleaseNotes>
-    <Version>1.3.0</Version>
+    <PackageReleaseNotes>Updated namespaces</PackageReleaseNotes>
+    <Version>2.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
