@@ -36,6 +36,12 @@ namespace EfCoreBaseRepo
 
         int ItemCount();
 
+        int ItemCount(Expression<Func<TEntity, bool>> predicate);
+
+        bool ItemCheck();
+
+        bool ItemCheck(Expression<Func<TEntity, bool>> predicate);
+
         TEntity GetLast();
     }
 

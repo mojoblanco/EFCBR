@@ -101,17 +101,38 @@ namespace EfCoreBaseRepo.Repository
 
         public IQueryable<TEntity> SearchFor(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Set<TEntity>().Where(predicate);
+            return _context.Set<TEntity>().AsNoTracking()
+                .Where(predicate);
         }
 
         public int ItemCount()
         {
-            return _context.Set<TEntity>().Count();
+            return _context.Set<TEntity>().AsNoTracking()
+                .Count();
+        }
+
+        public int ItemCount(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _context.Set<TEntity>().AsNoTracking()
+                    .Where(predicate).Count();
+        }
+
+        public bool ItemCheck()
+        {
+            return _context.Set<TEntity>().AsNoTracking()
+                .Any();
+        }
+
+        public bool ItemCheck(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _context.Set<TEntity>().AsNoTracking()
+                    .Where(predicate).Any();
         }
 
         public TEntity GetLast()
         {
-            return _context.Set<TEntity>().OrderByDescending(x => x.CreatedAt).FirstOrDefault();
+            return _context.Set<TEntity>().AsNoTracking()
+                    .OrderByDescending(x => x.Id).FirstOrDefault();
         }
     }
 
