@@ -18,13 +18,15 @@ namespace EfCoreBaseRepo
 
         Task<TEntity> GetByIdAsync(int id);
 
-        void Create(TEntity entity);
+        TEntity Create(TEntity entity);
 
-        Task CreateAsync(TEntity entity);
+        Task<TEntity> CreateAsync(TEntity entity);
+
+        void Create(IEnumerable<TEntity> entities);
 
         Task CreateManyAsync(IEnumerable<TEntity> entities);
 
-        void Update(int id, TEntity entity);
+        TEntity Update(TEntity entity);
 
         void UpdateMany(IEnumerable<TEntity> entities);
 

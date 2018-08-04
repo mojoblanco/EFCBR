@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace EfCoreBaseRepo.Repository
+namespace EfCoreBaseRepo
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
     {
@@ -47,18 +47,31 @@ namespace EfCoreBaseRepo.Repository
                     .FindAsync(id);
         }
 
-        public void Create(TEntity entity)
+        public TEntity Create(TEntity entity)
         {
             entity.CreatedAt = DateTime.Now;
 
             _context.Set<TEntity>().Add(entity);
+
+            return entity;
         }
 
-        public async Task CreateAsync(TEntity entity)
+        public async Task<TEntity> CreateAsync(TEntity entity)
         {
             entity.CreatedAt = DateTime.Now;
 
             await _context.Set<TEntity>().AddAsync(entity);
+
+            return entity;
+        }
+
+        public void Create(IEnumerable<TEntity> entities){
+            foreach (var item in entities)
+            {
+                item.CreatedAt = DateTime.Now;
+            }
+
+            _context.Set<TEntity>().AddRange(entities);
         }
 
         public async Task CreateManyAsync(IEnumerable<TEntity> entities)
@@ -71,11 +84,13 @@ namespace EfCoreBaseRepo.Repository
             await _context.Set<TEntity>().AddRangeAsync(entities);
         }
 
-        public void Update(int id, TEntity entity)
+        public TEntity Update(TEntity entity)
         {
             entity.UpdatedAt = DateTime.Now;
 
             _context.Set<TEntity>().Update(entity);
+
+            return entity;
         }
 
         public void UpdateMany(IEnumerable<TEntity> entities)
