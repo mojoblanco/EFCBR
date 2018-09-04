@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EfCoreBaseRepo
+namespace EFCBR
 {
     public class BaseEntity
     {
