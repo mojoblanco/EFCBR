@@ -8,7 +8,7 @@ namespace EFCBR.TestConsole.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=blogging.db");
+            optionsBuilder.UseSqlite("Data Source=school.db");
         }
     }
 }
