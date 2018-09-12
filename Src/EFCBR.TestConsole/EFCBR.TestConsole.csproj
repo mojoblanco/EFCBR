@@ -23,4 +23,9 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20180911130622_Initial.cs" />
+    <Compile Remove="Migrations\20180911130622_Initial.Designer.cs" />
+    <Compile Remove="Migrations\ApplicationDbContextModelSnapshot.cs" />
+  </ItemGroup>
 </Project>
