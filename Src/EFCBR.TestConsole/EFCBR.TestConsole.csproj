@@ -29,4 +29,10 @@
     <Compile Remove="Migrations\20180911130622_Initial.Designer.cs" />
     <Compile Remove="Migrations\ApplicationDbContextModelSnapshot.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="school.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
