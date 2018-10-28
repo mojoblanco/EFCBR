@@ -16,16 +16,15 @@ namespace EFCBR
             _context = context;
         }
 
+
         public IQueryable<TEntity> GetAll()
         {
-            return _context.Set<TEntity>().AsNoTracking()
-                    .OrderByDescending(x => x.CreatedAt);
+            return _context.Set<TEntity>().AsNoTracking();
         }
 
         public IQueryable<TEntity> GetAll(int count)
         {
             return _context.Set<TEntity>().AsNoTracking()
-                   .OrderByDescending(x => x.CreatedAt)
                    .Take(count);
         }
 
@@ -49,7 +48,7 @@ namespace EFCBR
 
         public TEntity Create(TEntity entity)
         {
-            entity.CreatedAt = DateTime.Now;
+            entity.CreatedAt = entity.UpdatedAt = DateTime.Now;
 
             _context.Set<TEntity>().Add(entity);
 
@@ -58,17 +57,18 @@ namespace EFCBR
 
         public async Task<TEntity> CreateAsync(TEntity entity)
         {
-            entity.CreatedAt = DateTime.Now;
+            entity.CreatedAt = entity.UpdatedAt = DateTime.Now;
 
             await _context.Set<TEntity>().AddAsync(entity);
 
             return entity;
         }
 
-        public void Create(IEnumerable<TEntity> entities){
+        public void Create(IEnumerable<TEntity> entities)
+        {
             foreach (var item in entities)
             {
-                item.CreatedAt = DateTime.Now;
+                item.CreatedAt = item.UpdatedAt = DateTime.Now;
             }
 
             _context.Set<TEntity>().AddRange(entities);
@@ -78,7 +78,7 @@ namespace EFCBR
         {
             foreach (var item in entities)
             {
-                item.CreatedAt = DateTime.Now;
+                item.CreatedAt = item.UpdatedAt = DateTime.Now;
             }
 
             await _context.Set<TEntity>().AddRangeAsync(entities);
@@ -138,6 +138,12 @@ namespace EFCBR
                 .Any();
         }
 
+        public bool ItemCheck(int id)
+        {
+            return _context.Set<TEntity>().AsNoTracking()
+                .Any(x => x.Id == id);
+        }
+
         public bool ItemCheck(Expression<Func<TEntity, bool>> predicate)
         {
             return _context.Set<TEntity>().AsNoTracking()
@@ -147,7 +153,8 @@ namespace EFCBR
         public TEntity GetLast()
         {
             return _context.Set<TEntity>().AsNoTracking()
-                    .OrderByDescending(x => x.Id).FirstOrDefault();
+                    .OrderByDescending(x => x.Id)
+                    .FirstOrDefault();
         }
     }
 
