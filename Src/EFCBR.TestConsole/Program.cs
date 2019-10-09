@@ -32,11 +32,11 @@ namespace EFCBR.TestConsole
             var unitOfWork = serviceProvider.GetService<IUnitOfWork>();
 
             // Insert student
-            studentRepo.Create(student);
+            studentRepo.Add(student);
             unitOfWork.Commit();
 
             // Get count of student
-            Console.WriteLine(studentRepo.ItemCount());
+            Console.WriteLine(studentRepo.GetAll().Count());
 
             Console.ReadLine();
         }

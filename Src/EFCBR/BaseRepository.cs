@@ -3,152 +3,73 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace EFCBR
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
-        private readonly DbContext _context;
+        protected readonly DbContext _context;
+        protected readonly DbSet<TEntity> _dbSet;
 
         public BaseRepository(DbContext context)
         {
             _context = context;
+            _dbSet = context.Set<TEntity>();
         }
 
-        public IQueryable<TEntity> GetAll()
+        public TEntity Get(int id)
         {
-            return _context.Set<TEntity>().AsNoTracking()
-                    .OrderByDescending(x => x.CreatedAt);
+            return _dbSet.Find(id);
         }
 
-        public IQueryable<TEntity> GetAll(int count)
+        public TEntity Get(string id)
         {
-            return _context.Set<TEntity>().AsNoTracking()
-                   .OrderByDescending(x => x.CreatedAt)
-                   .Take(count);
+            return _dbSet.Find(id);
         }
 
-        public IQueryable<TEntity> GetbyManyIds(int[] ids)
+        public IEnumerable<TEntity> GetAll()
         {
-            return from x in _context.Set<TEntity>()
-                   where ids.Contains(x.Id)
-                   select x;
+            return _dbSet.ToList();
         }
 
-        public TEntity GetById(int id)
+        public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Set<TEntity>().Find(id);
+            return _dbSet.SingleOrDefault(predicate);
         }
 
-        public async Task<TEntity> GetByIdAsync(int id)
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _context.Set<TEntity>()
-                    .FindAsync(id);
+            return _dbSet.Where(predicate);
         }
 
-        public TEntity Create(TEntity entity)
+        public void Add(TEntity entity)
         {
-            entity.CreatedAt = DateTime.Now;
-
-            _context.Set<TEntity>().Add(entity);
-
-            return entity;
+            _dbSet.Add(entity);
         }
 
-        public async Task<TEntity> CreateAsync(TEntity entity)
+        public void AddRange(IEnumerable<TEntity> entities)
         {
-            entity.CreatedAt = DateTime.Now;
-
-            await _context.Set<TEntity>().AddAsync(entity);
-
-            return entity;
+            _dbSet.AddRange(entities);
         }
 
-        public void Create(IEnumerable<TEntity> entities){
-            foreach (var item in entities)
-            {
-                item.CreatedAt = DateTime.Now;
-            }
-
-            _context.Set<TEntity>().AddRange(entities);
-        }
-
-        public async Task CreateManyAsync(IEnumerable<TEntity> entities)
+        public void Update(TEntity entity)
         {
-            foreach (var item in entities)
-            {
-                item.CreatedAt = DateTime.Now;
-            }
-
-            await _context.Set<TEntity>().AddRangeAsync(entities);
+            _dbSet.Update(entity);
         }
 
-        public TEntity Update(TEntity entity)
+        public void UpdateRange(IEnumerable<TEntity> entities)
         {
-            entity.UpdatedAt = DateTime.Now;
-
-            _context.Set<TEntity>().Update(entity);
-
-            return entity;
+            _dbSet.UpdateRange(entities);
+        }
+        
+        public void Remove(TEntity entity)
+        {
+            _dbSet.Remove(entity);
         }
 
-        public void UpdateMany(IEnumerable<TEntity> entities)
+        public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            foreach (var item in entities)
-            {
-                item.UpdatedAt = DateTime.Now;
-            }
-
-            _context.Set<TEntity>().UpdateRange(entities);
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            var entity = await GetByIdAsync(id);
-            _context.Set<TEntity>().Remove(entity);
-        }
-
-        public void DeleteMany(IEnumerable<TEntity> entities)
-        {
-            _context.Set<TEntity>().RemoveRange(entities);
-        }
-
-        public IQueryable<TEntity> SearchFor(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _context.Set<TEntity>().AsNoTracking()
-                .Where(predicate);
-        }
-
-        public int ItemCount()
-        {
-            return _context.Set<TEntity>().AsNoTracking()
-                .Count();
-        }
-
-        public int ItemCount(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _context.Set<TEntity>().AsNoTracking()
-                    .Where(predicate).Count();
-        }
-
-        public bool ItemCheck()
-        {
-            return _context.Set<TEntity>().AsNoTracking()
-                .Any();
-        }
-
-        public bool ItemCheck(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _context.Set<TEntity>().AsNoTracking()
-                    .Where(predicate).Any();
-        }
-
-        public TEntity GetLast()
-        {
-            return _context.Set<TEntity>().AsNoTracking()
-                    .OrderByDescending(x => x.Id).FirstOrDefault();
+            _dbSet.RemoveRange(entities);
         }
     }
-
 }

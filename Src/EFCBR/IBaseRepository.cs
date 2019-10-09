@@ -1,50 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace EFCBR
 {
-    public interface IBaseRepository<TEntity> where TEntity : BaseEntity
+    public interface IBaseRepository<TEntity> where TEntity : class
     {
-        IQueryable<TEntity> GetAll();
+        TEntity Get(int id);
+        TEntity Get(string id);
+        IEnumerable<TEntity> GetAll();
+        TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
-        IQueryable<TEntity> GetAll(int count);
+        void Add(TEntity entity);
+        void AddRange(IEnumerable<TEntity> entities);
 
-        IQueryable<TEntity> GetbyManyIds(int[] ids);
+        void Update(TEntity entity);
+        void UpdateRange(IEnumerable<TEntity> entities);
 
-        TEntity GetById(int id);
-
-        Task<TEntity> GetByIdAsync(int id);
-
-        TEntity Create(TEntity entity);
-
-        Task<TEntity> CreateAsync(TEntity entity);
-
-        void Create(IEnumerable<TEntity> entities);
-
-        Task CreateManyAsync(IEnumerable<TEntity> entities);
-
-        TEntity Update(TEntity entity);
-
-        void UpdateMany(IEnumerable<TEntity> entities);
-
-        Task DeleteAsync(int id);
-
-        void DeleteMany(IEnumerable<TEntity> entities);
-
-        IQueryable<TEntity> SearchFor(Expression<Func<TEntity, bool>> predicate);
-
-        int ItemCount();
-
-        int ItemCount(Expression<Func<TEntity, bool>> predicate);
-
-        bool ItemCheck();
-
-        bool ItemCheck(Expression<Func<TEntity, bool>> predicate);
-
-        TEntity GetLast();
+        void Remove(TEntity entity);
+        void RemoveRange(IEnumerable<TEntity> entities);
     }
 
 
