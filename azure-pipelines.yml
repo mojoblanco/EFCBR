@@ -13,7 +13,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
+- script: dotnet build 'Src/EFCBR/EFCBR.csproj'
   displayName: 'dotnet build $(buildConfiguration)'
 
 # - task: DotNetCoreCLI@2
