@@ -5,3 +5,4 @@ environment:
   nugetKey: 1234
 build_script:
 - cmd: dotnet --version
+- cmd: dotnet build "Src/EFCBR/EFCBR.csproj"
