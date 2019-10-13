@@ -22,8 +22,8 @@ namespace EFCBR
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
 
-        bool ItemExists();
-        bool ItemExists(Expression<Func<TEntity, bool>> predicate);
+        bool IsEmpty();
+        bool IsEmpty(Expression<Func<TEntity, bool>> predicate);
     }
 
 
