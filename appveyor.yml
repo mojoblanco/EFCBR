@@ -6,6 +6,6 @@ environment:
     secure: ol6I0wKr3gV5mAQ5OhvleB003mESNy1YB5J0Qj9VHP7KJ6jN84AZoQASAFo3pae2
 build_script:
 - cmd: dotnet build "Src/EFCBR/EFCBR.csproj"
-- cmd: dotnet pack "Src/EFCBR/EFCBR.csproj"
 - cmd: DEL /Q /F /S "*.nupkg"
+- cmd: dotnet pack "Src/EFCBR/EFCBR.csproj"
 - cmd: dotnet nuget push Src/EFCBR/bin/Release/**/*.nupkg -k %NUGET_API_KEY% -s https://api.nuget.org/v3/index.json
