@@ -10,6 +10,7 @@ namespace EFCBR
         TEntity Get(string id);
         IEnumerable<TEntity> GetAll();
         TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
+        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate);
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);
@@ -20,6 +21,9 @@ namespace EFCBR
 
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
+
+        bool ItemExists();
+        bool ItemExists(Expression<Func<TEntity, bool>> predicate);
     }
 
 

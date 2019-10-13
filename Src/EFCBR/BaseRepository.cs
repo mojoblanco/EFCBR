@@ -37,6 +37,11 @@ namespace EFCBR
             return _dbSet.SingleOrDefault(predicate);
         }
 
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _dbSet.FirstOrDefault(predicate);
+        }
+
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return _dbSet.Where(predicate);
@@ -70,6 +75,18 @@ namespace EFCBR
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
             _dbSet.RemoveRange(entities);
+        }
+
+        public bool IsEmpty()
+        {
+            return !_context.Set<TEntity>().AsNoTracking()
+                .Any();
+        }
+
+        public bool IsEmpty(Expression<Func<TEntity, bool>> predicate)
+        {
+            return !_context.Set<TEntity>().AsNoTracking()
+                    .Where(predicate).Any();
         }
     }
 }
